@@ -241,6 +241,7 @@ hr{
       text-align: center;
       font-size: 2rem;
       margin-bottom: 40px;
+      margin-top: 40px; /* إضافة هامش علوي للفصل بين الأقسام */
       position: relative;
     }
 
@@ -461,16 +462,6 @@ hr{
 }
 
 /* ==== تعديل: تنسيقات السلايدر الجديدة ==== */
-/* 1. إزالة تنسيق الشبكة القديم */
-/*
-.reviews-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 20px;
-}
-*/
-
-/* 2. إضافة تنسيقات السلايدر */
 .reviews-slider-wrapper {
     position: relative;
     max-width: 700px; /* عرض مناسب لسلايد واحد */
@@ -872,11 +863,17 @@ hr{
         padding: 20px 5%;
     }
     .headernav ul {
+        /* ==== تعديل: توسيع القائمة لتشمل الأقسام الجديدة ==== */
         position: static;
         transform: none;
         left: auto;
         justify-content: flex-start; 
         flex-grow: 1;
+        gap: 10px; /* تقليل الفجوة قليلاً */
+        flex-wrap: wrap; /* السماح بالالتفاف */
+    }
+    .headernav ul li {
+        font-size: 16px; /* تصغير الخط قليلاً */
     }
     .headernav span {
         padding-right: 0; 
@@ -902,6 +899,10 @@ hr{
         width: 100%; 
         flex-wrap: wrap; 
         justify-content: center; 
+        gap: 15px; /* إضافة فجوة للروابط في الجوال */
+    }
+     .headernav ul li {
+        font-size: 14px; /* تصغير الخط أكثر للجوال */
     }
     .hero {
         padding: 40px 20px; 
@@ -981,10 +982,16 @@ hr{
             <span class="websitename">متجر توركس</span>
             <ul>
                 <li><a class="btn-list" href="#home">الرئيسية</a></li>
-                <li><a class="btn-list" href="#products">المنتجات</a></li>
+                <li><a class="btn-list" href="#products">كل المنتجات</a></li>
+                <li><a class="btn-list" href="#sm-products">سوشيال ميديا</a></li>
+                <li><a class="btn-list" href="#pcg-products">ألعاب PC</a></li>
+                <li><a class="btn-list" href="#ms-products">أفلام ومسلسلات</a></li>
+                <li><a class="btn-list" href="#dm-products">تصميم ومونتاج</a></li>
+                <li><a class="btn-list" href="#pct-products">تويك PC</a></li>
+                <li><a class="btn-list" href="#msf-products">خدمات مايكروسوفت</a></li>
                 <li><a class="btn-list" href="#reviews">آراء العملاء</a></li>
                 <li><a class="btn-list" href="#aboutMe">من نحن</a></li>
-            </ul>
+                </ul>
             <button class="cart-btn" id="open-cart-btn">
                 <i class="fas fa-shopping-cart"></i>
                 <span class="cart-counter hidden" id="cart-counter">0</span>
@@ -1003,13 +1010,47 @@ hr{
             </div>
         </div>
     </section>
-                <h2>المنتجات</h2>
-<section id="products" class="product-section">
-  <div class="products-grid">
-      </div>
-</section>
 
-<section id="reviews" class="reviews-section">
+    <h2 id="products">جميع المنتجات</h2>
+    <section class="product-section"> <div class="products-grid" id="all-products-grid"> </div>
+    </section>
+    <h2 id="sm-products">سوشيال ميديا</h2>
+    <section class="product-section">
+      <div class="products-grid" id="sm-grid">
+          </div>
+    </section>
+
+    <h2 id="pcg-products">ألعاب PC</h2>
+    <section class="product-section">
+      <div class="products-grid" id="pcg-grid">
+          </div>
+    </section>
+
+    <h2 id="ms-products">أفلام و مسلسلات</h2>
+    <section class="product-section">
+      <div class="products-grid" id="ms-grid">
+          </div>
+    </section>
+
+    <h2 id="dm-products">خدمات التصميم والمونتاج</h2>
+    <section class="product-section">
+      <div class="products-grid" id="dm-grid">
+          </div>
+    </section>
+
+    <h2 id="pct-products">تويك PC</h2>
+    <section class="product-section">
+      <div class="products-grid" id="pct-grid">
+          </div>
+    </section>
+
+    <h2 id="msf-products">خدمات مايكروسوفت</h2>
+    <section class="product-section">
+      <div class="products-grid" id="msf-grid">
+          </div>
+    </section>
+
+    <section id="reviews" class="reviews-section">
     <h2>آراء العملاء</h2>
     <div class="reviews-container">
         <form id="review-form" class="review-form">
@@ -1102,22 +1143,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const clearCartBtn = document.getElementById('clear-cart-btn');
     
     // عناصر المنتجات
-    const productsGrid = document.querySelector('.products-grid');
+    // ==== تعديل: استهداف الشبكة الرئيسية ====
+    const mainProductsGrid = document.getElementById('all-products-grid'); 
+    // ==== نهاية التعديل ====
     const googleSheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSPa6WPFhppRsBLPOra9BMHHtrooU_sNmWX2eQG7F1EPUTD9MAX3LHT61iqX448Wt2gEchNHWth7Pze/pub?gid=0&single=true&output=csv';
     
-    // ==== تعديل: عناصر التقييمات والسلايدر ====
+    // عناصر التقييمات والسلايدر
     const reviewForm = document.getElementById('review-form');
     const submitReviewBtn = document.getElementById('submit-review-btn');
     const formMessage = document.getElementById('form-message');
-    // عناصر السلايدر
     const slider = document.getElementById('reviews-slider');
     const prevBtn = document.getElementById('slide-prev');
     const nextBtn = document.getElementById('slide-next');
-    let autoplayTimer; // متغير لحفظ مؤقت التشغيل التلقائي
-    let currentReviewIndex = 0; // متغير لتتبع التقييم الحالي
-    let allReviews = []; // مصفوفة لحفظ التقييمات
-    // ==== نهاية تعديل العناصر ====
-
+    let autoplayTimer; 
+    let currentReviewIndex = 0; 
+    let allReviews = []; 
 
     /* !! الصق الروابط هنا !! */
     const reviewSheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSPa6WPFhppRsBLPOra9BMHHtrooU_sNmWX2eQG7F1EPUTD9MAX3LHT61iqX448Wt2gEchNHWth7Pze/pub?gid=169688022&single=true&output=csv'; 
@@ -1144,7 +1184,7 @@ document.addEventListener('DOMContentLoaded', () => {
             cartCounter.textContent = cart.length;
             cart.forEach((item, index) => {
                 total += item.price; 
-                whatsappMessage += `*${index + 1}. ${item.name}*\n   - السعر: ${item.price.toFixed(2)} ر.س\n`;
+                whatsappMessage += `*${index + 1}. ${item.name}*\n    - السعر: ${item.price.toFixed(2)} ر.س\n`;
                 const cartItemElement = document.createElement('div');
                 cartItemElement.classList.add('cart-item');
                 cartItemElement.innerHTML = `
@@ -1211,8 +1251,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- وظائف المنتجات ---
     function setupAddToCartButtons() {
-        const addToCartButtons = document.querySelectorAll('.btnproduct');
+        // ==== تعديل: استهداف جميع الأزرار في الصفحة ====
+        const addToCartButtons = document.querySelectorAll('.btnproduct'); 
+        // ==== نهاية التعديل ====
         addToCartButtons.forEach(button => {
+            // منع إضافة المستمع أكثر من مرة (احتياطي)
+            if (button.dataset.listenerAttached) return; 
+            button.dataset.listenerAttached = true;
+
             button.addEventListener('click', (e) => {
                 const productCard = e.target.closest('.product-card');
                 const name = productCard.querySelector('.product-name').textContent;
@@ -1224,8 +1270,18 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    function displayProducts(products) {
-        productsGrid.innerHTML = ''; 
+    // ==== بداية التعديل: تعديل دالة عرض المنتجات لتقبل عنصر الشبكة ====
+    function displayProducts(products, targetGridElement) {
+        if (!targetGridElement) return; // حماية إذا لم يتم العثور على العنصر
+
+        targetGridElement.innerHTML = ''; // إفراغ الشبكة المستهدفة
+
+        // رسالة في حال كان القسم فارغاً
+        if (products.length === 0) {
+            targetGridElement.innerHTML = '<p style="text-align:center; color: var(--gray); padding: 20px 0;">لا توجد منتجات في هذا القسم حالياً.</p>';
+            return;
+        }
+
         products.forEach(product => {
             const nameStyle = (product.nameSize && product.nameSize.trim() !== '') ? `style="font-size: ${product.nameSize}"` : '';
             const descStyle = (product.descSize && product.descSize.trim() !== '') ? `style="font-size: ${product.descSize}"` : '';
@@ -1245,31 +1301,81 @@ document.addEventListener('DOMContentLoaded', () => {
                 <button class="btn btnproduct">أضف إلى السلة</button>
               </div>
             </div>`;
-            productsGrid.innerHTML += productCardHTML;
+            targetGridElement.innerHTML += productCardHTML;
         });
     }
+    // ==== نهاية التعديل ====
 
+
+    // ==== بداية التعديل: تعديل دالة جلب المنتجات لتوزيعها ====
     async function fetchProducts() {
         try {
-            productsGrid.innerHTML = '<p style="text-align:center; font-size: 1.2rem; color: var(--primary);">...جاري تحميل المنتجات...</p>';
+            // عرض رسالة التحميل في الشبكة الرئيسية فقط
+            if(mainProductsGrid) {
+                mainProductsGrid.innerHTML = '<p style="text-align:center; font-size: 1.2rem; color: var(--primary);">...جاري تحميل المنتجات...</p>';
+            }
+            
             const response = await fetch(googleSheetURL + '&_t=' + new Date().getTime());
             if (!response.ok) throw new Error('فشل الاتصال بملف البيانات');
+            
             const csvText = await response.text();
             const lines = csvText.split('\n').slice(1); 
-            const products = lines
+            
+            // 1. جلب جميع المنتجات
+            const allProducts = lines
                 .filter(line => line && line.trim() !== '') 
                 .map(line => {
                     const [name, sub, desc, price, oldPrice, imageURL, nameSize, descSize] = line.trim().split(',');
-                    return { name, sub, desc, price, oldPrice, imageURL, nameSize, descSize };
+                    // التأكد من أن 'sub' موجودة دائماً
+                    const safeSub = sub ? sub.trim() : ''; 
+                    return { name, sub: safeSub, desc, price, oldPrice, imageURL, nameSize, descSize };
                 })
                 .filter(p => p && p.name && p.name.trim() !== '');
-            displayProducts(products);
+
+            // 2. عرض جميع المنتجات في الشبكة الرئيسية
+            if(mainProductsGrid) {
+                displayProducts(allProducts, mainProductsGrid);
+            }
+
+            // 3. تعريف الأقسام والـ ID الخاص بشبكة كل قسم
+            const categories = {
+                'SM': 'sm-grid',
+                'PCG': 'pcg-grid',
+                'MS': 'ms-grid',
+                'DM': 'dm-grid',
+                'PCT': 'pct-grid',
+                'MSF': 'msf-grid'
+            };
+
+            // 4. فلترة وتوزيع المنتجات على الأقسام
+            for (const [subCode, gridId] of Object.entries(categories)) {
+                // فلترة المنتجات بناءً على كود التصنيف
+                const categoryProducts = allProducts.filter(p => p.sub === subCode);
+                
+                // إيجاد شبكة العرض الخاصة بالقسم
+                const targetGrid = document.getElementById(gridId);
+                
+                // إذا تم العثور على الشبكة، اعرض المنتجات فيها
+                if (targetGrid) {
+                    displayProducts(categoryProducts, targetGrid);
+                } else {
+                    console.warn(`لم يتم العثور على شبكة العرض بالـ ID: ${gridId}`);
+                }
+            }
+
+            // 5. تفعيل أزرار "أضف للسلة" لجميع المنتجات التي تم عرضها
             setupAddToCartButtons();
+
         } catch (error) {
             console.error('حدث خطأ:', error);
-            productsGrid.innerHTML = '<p style="text-align:center; font-size: 1.2rem; color: red;">حدث خطأ أثناء تحميل المنتجات. تأكد من صحة الرابط.</p>';
+            // عرض رسالة الخطأ في الشبكة الرئيسية
+            if(mainProductsGrid) {
+                mainProductsGrid.innerHTML = '<p style="text-align:center; font-size: 1.2rem; color: red;">حدث خطأ أثناء تحميل المنتجات. تأكد من صحة الرابط.</p>';
+            }
         }
     }
+    // ==== نهاية التعديل ====
+
 
     // ==== بداية وظائف التقييمات والسلايدر (معدلة) ====
     
@@ -1282,15 +1388,14 @@ document.addEventListener('DOMContentLoaded', () => {
         return starsHTML;
     }
 
-    // وظيفة عرض التقييمات داخل السلايدر
     function displayReviews(reviews) {
-        slider.innerHTML = ''; // إفراغ السلايدر
+        slider.innerHTML = ''; 
         if (reviews.length === 0) {
             slider.innerHTML = '<p style="text-align:center; color: var(--gray); padding: 20px;">لا توجد تقييمات حالياً. كن أول من يضيف تقييم!</p>';
             return;
         }
         
-        allReviews = reviews.slice().reverse(); // حفظ التقييمات (الأحدث أولاً)
+        allReviews = reviews.slice().reverse(); 
         
         let allReviewsHTML = '';
         allReviews.forEach(review => {
@@ -1309,71 +1414,64 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         
         slider.innerHTML = allReviewsHTML;
-        setupSlider(); // استدعاء وظيفة إعداد السلايدر
+        setupSlider(); 
     }
 
-    // وظيفة إعداد وتشغيل السلايدر
     function setupSlider() {
-        currentReviewIndex = 0; // إعادة التعيين
+        currentReviewIndex = 0; 
         const slides = slider.querySelectorAll('.review-card');
         
-        if (slides.length > 1) { // فقط إذا كان هناك أكثر من تقييم واحد
+        if (slides.length > 1) { 
             prevBtn.style.display = 'block';
             nextBtn.style.display = 'block';
 
             function updateSliderPosition() {
-                slider.style.transform = `translateX(${currentReviewIndex * 100}%)`; // تم عكس الإشارة لتناسب RTL
+                slider.style.transform = `translateX(${currentReviewIndex * 100}%)`; 
             }
 
             function showNext() {
-                currentReviewIndex = (currentReviewIndex - 1 + slides.length) % slides.length; // تم عكس المنطق لـ RTL
+                currentReviewIndex = (currentReviewIndex - 1 + slides.length) % slides.length; 
                 updateSliderPosition();
             }
 
             function showPrev() {
-                currentReviewIndex = (currentReviewIndex + 1) % slides.length; // تم عكس المنطق لـ RTL
+                currentReviewIndex = (currentReviewIndex + 1) % slides.length; 
                 updateSliderPosition();
             }
 
             function startAutoplay() {
-                stopAutoplay(); // إيقاف أي مؤقت قديم
-                autoplayTimer = setInterval(showNext, 5000); // 5 ثواني
+                stopAutoplay(); 
+                autoplayTimer = setInterval(showNext, 5000); 
             }
 
             function stopAutoplay() {
                 clearInterval(autoplayTimer);
             }
 
-            // ربط الأحداث
-// ربط الأحداث (تم تعديل الدوال لحل مشكلة الاتجاه)
-            nextBtn.addEventListener('click', () => {
-                showPrev(); // تم التبديل
-                stopAutoplay(); // إيقاف التشغيل التلقائي عند النقر
-            });
-            prevBtn.addEventListener('click', () => {
-                showNext(); // تم التبديل
-                stopAutoplay();
-            });
+            nextBtn.addEventListener('click', () => {
+                showPrev(); 
+                stopAutoplay(); 
+            });
+            prevBtn.addEventListener('click', () => {
+                showNext(); 
+                stopAutoplay();
+            });
             
-            // إيقاف التشغيل التلقائي عند تمرير الماوس
             const sliderWrapper = document.querySelector('.reviews-slider-wrapper');
             sliderWrapper.addEventListener('mouseenter', stopAutoplay);
             sliderWrapper.addEventListener('mouseleave', startAutoplay);
 
-            startAutoplay(); // بدء التشغيل التلقائي
+            startAutoplay(); 
             updateSliderPosition();
 
         } else {
-            // إخفاء الأسهم إذا كان هناك تقييم واحد أو لا يوجد
             prevBtn.style.display = 'none';
             nextBtn.style.display = 'none';
         }
     }
 
 
-    // وظيفة جلب التقييمات (للقراءة)
     async function fetchReviews() {
-        // إيقاف المؤقت القديم قبل بدء جلب جديد
         clearInterval(autoplayTimer); 
         
         try {
@@ -1400,7 +1498,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // وظيفة إرسال التقييم
     reviewForm.addEventListener('submit', async (e) => {
         e.preventDefault(); 
         submitReviewBtn.disabled = true;
@@ -1430,7 +1527,6 @@ document.addEventListener('DOMContentLoaded', () => {
             formMessage.classList.add('success');
             reviewForm.reset(); 
             
-            // إيقاف المؤقت القديم وإعادة جلب التقييمات
             clearInterval(autoplayTimer);
             setTimeout(fetchReviews, 1000); 
             
