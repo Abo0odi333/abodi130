@@ -863,14 +863,14 @@ hr{
         padding: 20px 5%;
     }
     .headernav ul {
-        /* ==== تعديل: توسيع القائمة لتشمل الأقسام الجديدة ==== */
+        /* ==== تعديل: تعديل القائمة لتناسب القائمة المنسدلة ==== */
         position: static;
         transform: none;
         left: auto;
         justify-content: flex-start; 
         flex-grow: 1;
         gap: 10px; /* تقليل الفجوة قليلاً */
-        flex-wrap: wrap; /* السماح بالالتفاف */
+        flex-wrap: nowrap; /* منع الالتفاف للعناصر الرئيسية */
     }
     .headernav ul li {
         font-size: 16px; /* تصغير الخط قليلاً */
@@ -904,6 +904,22 @@ hr{
      .headernav ul li {
         font-size: 14px; /* تصغير الخط أكثر للجوال */
     }
+    
+    /* ==== تعديل: تنسيق القائمة المنسدلة للجوال ==== */
+    .headernav ul li.dropdown:hover .dropdown-menu {
+        /* إيقاف الفتح عند التمرير في الجوال (يعتمد على النقر) */
+        /* يمكن تعديل هذا لاحقاً بجافاسكريبت إذا احتجت للنقر */
+    }
+    .dropdown-menu {
+        /* جعل القائمة المنسدلة تظهر بشكل أفضل على الشاشات الأصغر */
+        min-width: 180px;
+    }
+    .dropdown-menu li a.btn-list {
+        font-size: 14px;
+        padding: 8px 15px;
+    }
+    /* ==== نهاية تعديل الجوال للقائمة ==== */
+
     .hero {
         padding: 40px 20px; 
     }
@@ -975,6 +991,68 @@ hr{
     }
 }
 /* --- نهاية كود الجوال --- */
+
+
+/* ==== بداية كود القائمة المنسدلة (Dropdown) ==== */
+
+/* الأب الحاوي للقائمة (ليكون مرجعاً لها) */
+.headernav ul li.dropdown {
+  position: relative;
+}
+
+/* القائمة المنسدلة المخفية */
+.dropdown-menu {
+  display: none; /* إخفاء القائمة افتراضياً */
+  position: absolute;
+  top: 100%; /* إظهارها أسفل الأب مباشرة */
+  right: 0; /* محاذاة لليمين (بسبب RTL) */
+  min-width: 220px; /* عرض مناسب للقائمة */
+  background-color: var(--background); /* نفس لون الهيدر */
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 0;
+  box-shadow: 0 5px 15px rgba(0, 173, 181, 0.2);
+  z-index: 1001; /* للتأكد من ظهورها فوق العناصر الأخرى */
+  
+  /* إعادة تعيين قيم موروثة قد تسبب مشاكل */
+  left: auto;
+  transform: none;
+}
+
+/* إظهار القائمة عند تمرير الماوس فوق الأب */
+.headernav ul li.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+/* تنسيق عناصر القائمة المنسدلة */
+.dropdown-menu li {
+  padding: 0;
+  margin: 0;
+  width: 100%; /* جعل العناصر تأخذ العرض الكامل */
+}
+
+/* إزالة تأثير الخط السفلي المتحرك من عناصر القائمة المنسدلة */
+.dropdown-menu li::after {
+  display: none;
+}
+
+/* تنسيق الروابط داخل القائمة المنسدلة */
+.dropdown-menu li a.btn-list {
+  display: block; /* لجعل الرابط يملأ المساحة */
+  padding: 10px 20px;
+  font-size: 16px;
+  color: var(--text-color);
+  transition: background-color 0.3s, color 0.3s;
+  white-space: nowrap; /* لمنع التفاف النص */
+}
+
+/* تغيير اللون عند التمرير على الروابط */
+.dropdown-menu li a.btn-list:hover {
+  background-color: var(--primary-dark);
+  color: #ffffff;
+}
+/* ==== نهاية كود القائمة المنسدلة ==== */
+
 </style>
 <body>
     <header>
@@ -982,22 +1060,30 @@ hr{
             <span class="websitename">متجر توركس</span>
             <ul>
                 <li><a class="btn-list" href="#home">الرئيسية</a></li>
-                <li><a class="btn-list" href="#products">كل المنتجات</a></li>
-                <li><a class="btn-list" href="#sm-products">سوشيال ميديا</a></li>
-                <li><a class="btn-list" href="#pcg-products">ألعاب PC</a></li>
-                <li><a class="btn-list" href="#ms-products">أفلام ومسلسلات</a></li>
-                <li><a class="btn-list" href="#dm-products">تصميم ومونتاج</a></li>
-                <li><a class="btn-list" href="#pct-products">تويك PC</a></li>
-                <li><a class="btn-list" href="#msf-products">خدمات مايكروسوفت</a></li>
+                
+                <li class="dropdown">
+                    <a class="btn-list" href="#products">
+                        المنتجات <i class="fas fa-chevron-down" style="font-size: 0.8em; margin-right: 3px;"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="btn-list" href="#products">كل المنتجات</a></li>
+                        <li><a class="btn-list" href="#sm-products">سوشيال ميديا</a></li>
+                        <li><a class="btn-list" href="#pcg-products">ألعاب PC</a></li>
+                        <li><a class="btn-list" href="#ms-products">أفلام ومسلسلات</a></li>
+                        <li><a class="btn-list" href="#dm-products">تصميم ومونتاج</a></li>
+                        <li><a class="btn-list" href="#pct-products">تويك PC</a></li>
+                        <li><a class="btn-list" href="#msf-products">خدمات مايكروسوفت</a></li>
+                    </ul>
+                </li>
                 <li><a class="btn-list" href="#reviews">آراء العملاء</a></li>
                 <li><a class="btn-list" href="#aboutMe">من نحن</a></li>
-                </ul>
+            </ul>
             <button class="cart-btn" id="open-cart-btn">
                 <i class="fas fa-shopping-cart"></i>
                 <span class="cart-counter hidden" id="cart-counter">0</span>
             </button>
-            </nav>
-    </header>
+        </nav>
+        </header>
     <section id="home" class="hero">
         <div class="container hero-content" bis_skin_checked="1">
             <div class="hero-text" bis_skin_checked="1">
@@ -1012,7 +1098,9 @@ hr{
     </section>
 
     <h2 id="products">جميع المنتجات</h2>
-    <section class="product-section"> <div class="products-grid" id="all-products-grid"> </div>
+    <section class="product-section"> 
+        <div class="products-grid" id="all-products-grid"> 
+        </div>
     </section>
     <h2 id="sm-products">سوشيال ميديا</h2>
     <section class="product-section">
@@ -1143,9 +1231,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const clearCartBtn = document.getElementById('clear-cart-btn');
     
     // عناصر المنتجات
-    // ==== تعديل: استهداف الشبكة الرئيسية ====
     const mainProductsGrid = document.getElementById('all-products-grid'); 
-    // ==== نهاية التعديل ====
     const googleSheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSPa6WPFhppRsBLPOra9BMHHtrooU_sNmWX2eQG7F1EPUTD9MAX3LHT61iqX448Wt2gEchNHWth7Pze/pub?gid=0&single=true&output=csv';
     
     // عناصر التقييمات والسلايدر
@@ -1251,11 +1337,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- وظائف المنتجات ---
     function setupAddToCartButtons() {
-        // ==== تعديل: استهداف جميع الأزرار في الصفحة ====
         const addToCartButtons = document.querySelectorAll('.btnproduct'); 
-        // ==== نهاية التعديل ====
         addToCartButtons.forEach(button => {
-            // منع إضافة المستمع أكثر من مرة (احتياطي)
             if (button.dataset.listenerAttached) return; 
             button.dataset.listenerAttached = true;
 
@@ -1270,13 +1353,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ==== بداية التعديل: تعديل دالة عرض المنتجات لتقبل عنصر الشبكة ====
     function displayProducts(products, targetGridElement) {
-        if (!targetGridElement) return; // حماية إذا لم يتم العثور على العنصر
+        if (!targetGridElement) return; 
 
-        targetGridElement.innerHTML = ''; // إفراغ الشبكة المستهدفة
+        targetGridElement.innerHTML = ''; 
 
-        // رسالة في حال كان القسم فارغاً
         if (products.length === 0) {
             targetGridElement.innerHTML = '<p style="text-align:center; color: var(--gray); padding: 20px 0;">لا توجد منتجات في هذا القسم حالياً.</p>';
             return;
@@ -1304,13 +1385,10 @@ document.addEventListener('DOMContentLoaded', () => {
             targetGridElement.innerHTML += productCardHTML;
         });
     }
-    // ==== نهاية التعديل ====
 
 
-    // ==== بداية التعديل: تعديل دالة جلب المنتجات لتوزيعها ====
     async function fetchProducts() {
         try {
-            // عرض رسالة التحميل في الشبكة الرئيسية فقط
             if(mainProductsGrid) {
                 mainProductsGrid.innerHTML = '<p style="text-align:center; font-size: 1.2rem; color: var(--primary);">...جاري تحميل المنتجات...</p>';
             }
@@ -1321,23 +1399,19 @@ document.addEventListener('DOMContentLoaded', () => {
             const csvText = await response.text();
             const lines = csvText.split('\n').slice(1); 
             
-            // 1. جلب جميع المنتجات
             const allProducts = lines
                 .filter(line => line && line.trim() !== '') 
                 .map(line => {
                     const [name, sub, desc, price, oldPrice, imageURL, nameSize, descSize] = line.trim().split(',');
-                    // التأكد من أن 'sub' موجودة دائماً
                     const safeSub = sub ? sub.trim() : ''; 
                     return { name, sub: safeSub, desc, price, oldPrice, imageURL, nameSize, descSize };
                 })
                 .filter(p => p && p.name && p.name.trim() !== '');
 
-            // 2. عرض جميع المنتجات في الشبكة الرئيسية
             if(mainProductsGrid) {
                 displayProducts(allProducts, mainProductsGrid);
             }
 
-            // 3. تعريف الأقسام والـ ID الخاص بشبكة كل قسم
             const categories = {
                 'SM': 'sm-grid',
                 'PCG': 'pcg-grid',
@@ -1347,15 +1421,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 'MSF': 'msf-grid'
             };
 
-            // 4. فلترة وتوزيع المنتجات على الأقسام
             for (const [subCode, gridId] of Object.entries(categories)) {
-                // فلترة المنتجات بناءً على كود التصنيف
                 const categoryProducts = allProducts.filter(p => p.sub === subCode);
-                
-                // إيجاد شبكة العرض الخاصة بالقسم
                 const targetGrid = document.getElementById(gridId);
                 
-                // إذا تم العثور على الشبكة، اعرض المنتجات فيها
                 if (targetGrid) {
                     displayProducts(categoryProducts, targetGrid);
                 } else {
@@ -1363,18 +1432,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
-            // 5. تفعيل أزرار "أضف للسلة" لجميع المنتجات التي تم عرضها
             setupAddToCartButtons();
 
         } catch (error) {
             console.error('حدث خطأ:', error);
-            // عرض رسالة الخطأ في الشبكة الرئيسية
             if(mainProductsGrid) {
                 mainProductsGrid.innerHTML = '<p style="text-align:center; font-size: 1.2rem; color: red;">حدث خطأ أثناء تحميل المنتجات. تأكد من صحة الرابط.</p>';
             }
         }
     }
-    // ==== نهاية التعديل ====
 
 
     // ==== بداية وظائف التقييمات والسلايدر (معدلة) ====
