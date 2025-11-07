@@ -56,7 +56,10 @@ hr{
 .headernav span {
     font-size: 24px;
 }
-.headernav ul{
+
+/* ==== تعديل CSS: (حل القلتش) ==== */
+/* استخدام (>) لاستهداف القائمة الرئيسية فقط وليس القوائم المتداخلة */
+.headernav > ul{
     position: absolute;
     display: flex;
     justify-content: center;
@@ -67,7 +70,7 @@ hr{
     transform: translateX(-50%);
     margin: 0; 
 }   
-.headernav ul li {
+.headernav > ul li {
   position: relative;
   cursor: pointer;
   font-size: 18px;
@@ -85,7 +88,7 @@ hr{
   color: var(--text-color);
 }
 
-.headernav ul li::after {
+.headernav > ul li::after {
   content: "";
   position: absolute;
   bottom: -5px; 
@@ -96,9 +99,12 @@ hr{
   transition: width 0.3s ease;
 }
 
-.headernav ul li:hover::after {
+.headernav > ul li:hover::after {
   width: 100%; 
 }
+/* ==== نهاية تعديل CSS ==== */
+
+
 .websitename {
   display: inline-flex;
   align-items: center;
@@ -862,19 +868,20 @@ hr{
     .headernav {
         padding: 20px 5%;
     }
-    .headernav ul {
-        /* ==== تعديل: تعديل القائمة لتناسب القائمة المنسدلة ==== */
+    /* ==== تعديل CSS: (حل القلتش) ==== */
+    .headernav > ul {
         position: static;
         transform: none;
         left: auto;
         justify-content: flex-start; 
         flex-grow: 1;
-        gap: 10px; /* تقليل الفجوة قليلاً */
-        flex-wrap: nowrap; /* منع الالتفاف للعناصر الرئيسية */
+        gap: 10px; 
+        flex-wrap: nowrap; 
     }
-    .headernav ul li {
-        font-size: 16px; /* تصغير الخط قليلاً */
+    .headernav > ul li {
+        font-size: 16px; 
     }
+    /* ==== نهاية تعديل CSS ==== */
     .headernav span {
         padding-right: 0; 
     }
@@ -894,31 +901,32 @@ hr{
         order: 2; 
         margin-left: 0;
     }
-    .headernav ul {
+    /* ==== تعديل CSS: (حل القلتش) ==== */
+    .headernav > ul {
         order: 3; 
         width: 100%; 
         flex-wrap: wrap; 
         justify-content: center; 
-        gap: 15px; /* إضافة فجوة للروابط في الجوال */
+        gap: 15px; 
     }
-     .headernav ul li {
-        font-size: 14px; /* تصغير الخط أكثر للجوال */
+     .headernav > ul li {
+        font-size: 14px; 
     }
+    /* ==== نهاية تعديل CSS ==== */
+
     
-    /* ==== تعديل: تنسيق القائمة المنسدلة للجوال ==== */
-    .headernav ul li.dropdown:hover .dropdown-menu {
-        /* إيقاف الفتح عند التمرير في الجوال (يعتمد على النقر) */
-        /* يمكن تعديل هذا لاحقاً بجافاسكريبت إذا احتجت للنقر */
-    }
+    /* ==== تعديل CSS: (التوجل) ==== */
+    /* حذف قاعدة الهوفر الخاصة بالجوال */
+    /* .headernav ul li.dropdown:hover .dropdown-menu { ... } */
+    /* ==== نهاية تعديل CSS ==== */
+
     .dropdown-menu {
-        /* جعل القائمة المنسدلة تظهر بشكل أفضل على الشاشات الأصغر */
         min-width: 180px;
     }
     .dropdown-menu li a.btn-list {
         font-size: 14px;
         padding: 8px 15px;
     }
-    /* ==== نهاية تعديل الجوال للقائمة ==== */
 
     .hero {
         padding: 40px 20px; 
@@ -995,10 +1003,12 @@ hr{
 
 /* ==== بداية كود القائمة المنسدلة (Dropdown) ==== */
 
+/* ==== تعديل CSS: (حل القلتش) ==== */
 /* الأب الحاوي للقائمة (ليكون مرجعاً لها) */
-.headernav ul li.dropdown {
+.headernav > ul li.dropdown {
   position: relative;
 }
+/* ==== نهاية تعديل CSS ==== */
 
 /* القائمة المنسدلة المخفية */
 .dropdown-menu {
@@ -1019,10 +1029,20 @@ hr{
   transform: none;
 }
 
-/* إظهار القائمة عند تمرير الماوس فوق الأب */
+/* ==== تعديل CSS: (التوجل) ==== */
+/* (حذف) قاعدة الهوفر القديمة */
+/*
 .headernav ul li.dropdown:hover .dropdown-menu {
   display: block;
 }
+*/
+
+/* (إضافة) كلاس لإظهار القائمة عبر الجافاسكريبت */
+.dropdown-menu.show {
+  display: block;
+}
+/* ==== نهاية تعديل CSS ==== */
+
 
 /* تنسيق عناصر القائمة المنسدلة */
 .dropdown-menu li {
@@ -1062,10 +1082,10 @@ hr{
                 <li><a class="btn-list" href="#home">الرئيسية</a></li>
                 
                 <li class="dropdown">
-                    <a class="btn-list" href="#products">
+                    <a class="btn-list" href="#products" id="products-dropdown-toggle">
                         المنتجات <i class="fas fa-chevron-down" style="font-size: 0.8em; margin-right: 3px;"></i>
                     </a>
-                    <ul class="dropdown-menu">
+                    <ul class="dropdown-menu" id="products-dropdown-menu">
                         <li><a class="btn-list" href="#products">كل المنتجات</a></li>
                         <li><a class="btn-list" href="#sm-products">سوشيال ميديا</a></li>
                         <li><a class="btn-list" href="#pcg-products">ألعاب PC</a></li>
@@ -1244,6 +1264,13 @@ document.addEventListener('DOMContentLoaded', () => {
     let autoplayTimer; 
     let currentReviewIndex = 0; 
     let allReviews = []; 
+
+    // ==== تعديل JS: (التوجل) إضافة عناصر القائمة المنسدلة ====
+    const dropdownToggle = document.getElementById('products-dropdown-toggle');
+    const dropdownMenu = document.getElementById('products-dropdown-menu');
+    const dropdownLinks = dropdownMenu.querySelectorAll('a.btn-list');
+    // ==== نهاية تعديل JS ====
+
 
     /* !! الصق الروابط هنا !! */
     const reviewSheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSPa6WPFhppRsBLPOra9BMHHtrooU_sNmWX2eQG7F1EPUTD9MAX3LHT61iqX448Wt2gEchNHWth7Pze/pub?gid=169688022&single=true&output=csv'; 
@@ -1612,6 +1639,36 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchProducts(); 
     fetchReviews(); 
     updateCartUI(); 
+
+    // ==== بداية: تعديل JS (التوجل) - إضافة منطق القائمة المنسدلة ====
+
+    // 1. فتح وإغلاق القائمة عند الضغط على الزر
+    if(dropdownToggle) {
+        dropdownToggle.addEventListener('click', (e) => {
+            e.preventDefault(); // منع الرابط من القفز للصفحة
+            if (dropdownMenu) {
+                dropdownMenu.classList.toggle('show');
+            }
+        });
+    }
+
+    // 2. إغلاق القائمة عند الضغط على أي رابط بداخلها
+    dropdownLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            if (dropdownMenu) {
+                dropdownMenu.classList.remove('show');
+            }
+        });
+    });
+
+    // 3. (اختياري) إغلاق القائمة عند الضغط في أي مكان آخر في الصفحة
+    window.addEventListener('click', (e) => {
+        // تحقق إذا كان الضغط خارج الزر وخارج القائمة
+        if (dropdownMenu && dropdownToggle && !dropdownToggle.contains(e.target) && !dropdownMenu.contains(e.target)) {
+            dropdownMenu.classList.remove('show');
+        }
+    });
+    // ==== نهاية: تعديل JS ====
 
 });
 </script>
