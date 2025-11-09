@@ -11,15 +11,16 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@100..900&display=swap');
 :root {
-            --primary: #00adb5;
-            --background: #222831;
-            --text-color: #eeeeee;
-            --primary-dark: #007f85;
-            --gray: #A1A1AA;
-            --accent: #007f85;
-            --border: #4B5563;
-            --light: #007f85;
-            --gray-light: #374151;
+            /* ==== هذه هي لوحة الألوان الجديدة ==== */
+            --primary: #9333EA;       /* بنفسجي ساطع (بدلاً من الأزرق الفيروزي) */
+            --background: #222831;   /* خلفية غامقة (نفس الأصل) */
+            --text-color: #eeeeee;   /* لون النص (نفس الأصل) */
+            --primary-dark: #7E22CE;  /* بنفسجي أغمق (للبطاقات والأزرار) */
+            --gray: #A1A1AA;         /* رمادي (نفس الأصل) */
+            --accent: #7E22CE;       /* لون ثانوي (تم تغييره للبنفسجي) */
+            --border: #4B5563;       /* حدود (نفس الأصل) */
+            --light: #7E22CE;        /* لون إضاءة (تم تغييره للبنفسجي) */
+            --gray-light: #374151;   /* رمادي فاتح (نفس الأصل) */
         }
 *{
     font-family: noto kufi arabic, sans-serif;
@@ -691,7 +692,7 @@ hr{
     height: 100vh;
     background: var(--background);
     z-index: 1100;
-    box-shadow: 5px 0 15px rgba(0, 173, 181, 0.3);
+    box-shadow: 5px 0 15px rgba(147, 51, 234, 0.3); /* تم تعديل لون الظل للبنفسجي */
     border-right: 2px solid var(--primary); 
     transform: translateX(-100%); 
     transition: transform 0.4s ease;
@@ -833,7 +834,7 @@ hr{
     right: 25px; 
     width: 60px;
     height: 60px;
-    background-color: #25D366; 
+    background-color: #25D366; /* لون الواتساب الأصلي */
     color: #FFF;
     border-radius: 50%;
     display: flex;
@@ -1055,7 +1056,7 @@ hr{
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 10px 0;
-  box-shadow: 0 5px 15px rgba(0, 173, 181, 0.2);
+  box-shadow: 0 5px 15px rgba(147, 51, 234, 0.2); /* تم تعديل لون الظل للبنفسجي */
   z-index: 1001; /* للتأكد من ظهورها فوق العناصر الأخرى */
   
   /* إعادة تعيين قيم موروثة قد تسبب مشاكل */
@@ -1263,7 +1264,7 @@ hr{
     </div>
     <div class="cart-footer">
         <a id="checkout-btn" href="#" class="btn" target="_blank">
-            <i class="fab fa-whatsapp"></i> إتمام الطلب (المجموع: <span id="cart-total">0</span> $)
+            <i class="fab fa-whatsapp"></i> إتمام الطلب (المجموع: <span id="cart-total">0</span> $)<br>
         </a>
         <button id="clear-cart-btn" class="btn btn-outline">
             <i class="fas fa-trash"></i> حذف كل المنتجات
@@ -1305,11 +1306,11 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentReviewIndex = 0; 
     let allReviews = []; 
 
-    // ==== تعديل JS: (التوجل) إضافة عناصر القائمة المنسدلة ====
+    // ==== تعديل JS: (التوجل) إضافة عناصر القائمة المنسدلة ====<br>
     const dropdownToggle = document.getElementById('products-dropdown-toggle');
     const dropdownMenu = document.getElementById('products-dropdown-menu');
     const dropdownLinks = dropdownMenu.querySelectorAll('a.btn-list');
-    // ==== نهاية تعديل JS ====
+    // ==== نهاية تعديل JS ====<br>
 
 
     /* !! الصق الروابط هنا !! */
@@ -1510,7 +1511,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    // ==== بداية وظائف التقييمات والسلايدر (معدلة) ====
+    // ==== بداية وظائف التقييمات والسلايدر (معدلة) ====<br>
     
     function createStarRating(rating) {
         let starsHTML = '';
@@ -1673,14 +1674,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // ==== نهاية وظائف التقييمات ====
+    // ==== نهاية وظائف التقييمات ====<br>
 
     // --- 5. التشغيل الأولي ---
     fetchProducts(); 
     fetchReviews(); 
     updateCartUI(); 
 
-    // ==== بداية: تعديل JS (التوجل) - إضافة منطق القائمة المنسدلة ====
+    // ==== بداية: تعديل JS (التوجل) - إضافة منطق القائمة المنسدلة ====<br>
 
     // 1. فتح وإغلاق القائمة عند الضغط على الزر
     if(dropdownToggle) {
@@ -1708,7 +1709,7 @@ document.addEventListener('DOMContentLoaded', () => {
             dropdownMenu.classList.remove('show');
         }
     });
-    // ==== نهاية: تعديل JS ====
+    // ==== نهاية: تعديل JS ====<br>
 
 });
 </script>
