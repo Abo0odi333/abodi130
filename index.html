@@ -1248,11 +1248,8 @@ hr{
   </div>
 </section>
 
-<a href="https://wa.me/905061997710?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%20%D8%A7%D8%AD%D8%AA%D8%A7%D8%AC%20%D9%85%D8%B3%D8%A7%D8%B9%D8%AF%D8%A9" class="whatsapp-support-btn" target="_blank">
+<a href="https://wa.me/966500187855?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%20%D8%A7%D8%AD%D8%AA%D8%A7%D8%AC%20%D9%85%D8%B3%D8%A7%D8%B9%D8%AF%D8%A9" class="whatsapp-support-btn" target="_blank">
     <i class="fab fa-whatsapp"></i>
-</a>
-<a href="https://www.instagram.com/torex.store/" class="instagram-support-btn" target="_blank">
-    <i class="fab fa-instagram"></i>
 </a>
 <div id="cart-modal" class="cart-modal">
     <div class="cart-header">
@@ -1278,7 +1275,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 1. تعريف المتغيرات والعناصر ---
     let cart = JSON.parse(localStorage.getItem('abo0odiCart')) || [];
-    const phoneNumber = '905061997710'; 
+    const phoneNumber = '966500187855'; 
 
     // عناصر السلة
     const cartModal = document.getElementById('cart-modal');
@@ -1293,28 +1290,24 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // عناصر المنتجات
     const mainProductsGrid = document.getElementById('all-products-grid'); 
-    const googleSheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSPa6WPFhppRsBLPOra9BMHHtrooU_sNmWX2eQG7F1EPUTD9MAX3LHT61iqX448Wt2gEchNHWth7Pze/pub?gid=0&single=true&output=csv';
+    const googleSheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTlUSvrMbis618rLXVg4WVUmPeJ86o3H0wcyafL3i8sUlvTYawjL7lagu7fyzqeB0UFfD0w8f8to4l3/pub?gid=0&single=true&output=csv';
     
-    // عناصر التقييمات والسلايدر
+    // ==== تعديل: عناصر التقييمات والسلايدر ====
     const reviewForm = document.getElementById('review-form');
     const submitReviewBtn = document.getElementById('submit-review-btn');
     const formMessage = document.getElementById('form-message');
+    // عناصر السلايدر
     const slider = document.getElementById('reviews-slider');
     const prevBtn = document.getElementById('slide-prev');
     const nextBtn = document.getElementById('slide-next');
-    let autoplayTimer; 
-    let currentReviewIndex = 0; 
-    let allReviews = []; 
-
-    // ==== تعديل JS: (التوجل) إضافة عناصر القائمة المنسدلة ====<br>
-    const dropdownToggle = document.getElementById('products-dropdown-toggle');
-    const dropdownMenu = document.getElementById('products-dropdown-menu');
-    const dropdownLinks = dropdownMenu.querySelectorAll('a.btn-list');
-    // ==== نهاية تعديل JS ====<br>
+    let autoplayTimer; // متغير لحفظ مؤقت التشغيل التلقائي
+    let currentReviewIndex = 0; // متغير لتتبع التقييم الحالي
+    let allReviews = []; // مصفوفة لحفظ التقييمات
+    // ==== نهاية تعديل العناصر ====
 
 
     /* !! الصق الروابط هنا !! */
-    const reviewSheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSPa6WPFhppRsBLPOra9BMHHtrooU_sNmWX2eQG7F1EPUTD9MAX3LHT61iqX448Wt2gEchNHWth7Pze/pub?gid=169688022&single=true&output=csv'; 
+    const reviewSheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTlUSvrMbis618rLXVg4WVUmPeJ86o3H0wcyafL3i8sUlvTYawjL7lagu7fyzqeB0UFfD0w8f8to4l3/pub?gid=169688022&single=true&output=csv'; 
     const reviewAppURL = 'https://script.google.com/macros/s/AKfycbxRtJxTemuP0SjWjNJuKtExgMntDz-GLdYh_v1zFvWLIaWyUqeJEdbLOxLgDgwSm1C3/exec'; 
     /* !! نهاية قسم الروابط !! */
 
